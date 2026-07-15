@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Recipe Recommender</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Segoe UI', sans-serif;
+            min-height:100vh;
+            padding:40px;
+            background:
+            linear-gradient(rgba(255,248,244,0.64),
+            rgba(255,248,244,0.64)),
+            url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600");
+            background-size:cover;
+            background-position:center;
+            background-attachment:fixed;
+            color:#5d4037;
+        }
+
+        h1{
+            text-align:center;
+            font-size:50px;
+            color:#c0392b;
+            margin-bottom:10px;
+            font-family:Georgia, serif;
+            letter-spacing:1px;
+            text-shadow:2px 2px 10px rgba(0,0,0,0.12);
+        }
+
+        h1::after{
+            content:" 🍛";
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#6d4c41;
+            margin-bottom:28px;
+            font-size:20px;
+        }
+
+        form{
+            max-width:850px;
+            margin:30px auto;
+            background:rgba(255,255,255,0.72);
+            backdrop-filter:blur(16px);
+            border-radius:30px;
+            padding:35px;
+            text-align:center;
+            box-shadow:0 12px 30px rgba(0,0,0,0.12);
+            border:1px solid rgba(255,255,255,0.5);
+            transition:0.3s ease;
+        }
+
+        form:hover{
+            transform:translateY(-5px);
+        }
+
+        label{
+            font-size:20px;
+            color:#6d4c41;
+            font-weight:600;
+        }
+
+        input[type="text"]{
+            width:70%;
+            padding:16px;
+            border:2px solid #ffb74d;
+            border-radius:18px;
+            background:#fffaf3;
+            margin-top:20px;
+            font-size:16px;
+            outline:none;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            transition:0.3s ease;
+        }
+
+        input[type="text"]:focus{
+            transform:scale(1.02);
+            border-color:#ff5722;
+            box-shadow:0 0 15px rgba(255,87,34,0.3);
+        }
+
+        input[type="submit"]{
+            padding:16px 24px;
+            border:none;
+            border-radius:18px;
+            background:linear-gradient(to right,#ff7043,#ff9800);
+            color:white;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+            margin-left:10px;
+            transition:0.3s ease;
+        }
+
+        input[type="submit"]:hover{
+            transform:translateY(-3px) scale(1.04);
+            box-shadow:0 10px 25px rgba(255,112,67,0.45);
+            filter:brightness(1.05);
+        }
+
+        h2{
+            text-align:center;
+            margin-top:45px;
+            margin-bottom:25px;
+            color:#bf360c;
+            font-size:38px;
+            font-family:Georgia, serif;
+        }
+
+        h2::before{
+            content:"🍽️ ";
+        }
+
+        .recipe{
+            background:rgba(255,255,255,0.76);
+            backdrop-filter:blur(14px);
+            max-width:950px;
+            margin:25px auto;
+            padding:30px;
+            border-radius:28px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.12);
+            transition:0.35s ease;
+            position:relative;
+            overflow:hidden;
+            border-left:8px solid #ff7043;
+        }
+
+        .recipe:hover{
+            transform:translateY(-8px);
+            box-shadow:
+            0 14px 35px rgba(0,0,0,0.18),
+            0 0 18px rgba(255,112,67,0.15);
+        }
+
+        .recipe::before{
+            content:"";
+            position:absolute;
+            top:-30px;
+            right:-30px;
+            width:110px;
+            height:110px;
+            background:url("https://cdn-icons-png.flaticon.com/512/1046/1046784.png");
+            background-size:contain;
+            background-repeat:no-repeat;
+            opacity:0.10;
+        }
+
+        .recipe h3{
+            color:#d84315;
+            margin-bottom:15px;
+            font-size:30px;
+            font-family:Georgia, serif;
+        }
+
+        .recipe p{
+            line-height:1.9;
+            margin:10px 0;
+            color:#5d4037;
+            font-size:16px;
+        }
+
+        .recipe strong{
+            color:#c0392b;
+        }
+
+        .recipe a{
+            display:inline-block;
+            margin-top:15px;
+            text-decoration:none;
+            background:linear-gradient(to right,#ff7043,#ff9800);
+            color:white;
+            padding:12px 18px;
+            border-radius:14px;
+            font-weight:bold;
+            transition:0.3s ease;
+        }
+
+        .recipe a:hover{
+            transform:scale(1.05);
+            box-shadow:0 6px 18px rgba(255,112,67,0.4);
+        }
+
+        .no-results{
+            text-align:center;
+            background:#fff3f3;
+            color:#d32f2f;
+            padding:18px;
+            border-radius:16px;
+            max-width:500px;
+            margin:30px auto;
+            font-weight:bold;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        @media(max-width:768px){
+
+            body{
+                padding:20px;
+            }
+
+            h1{
+                font-size:38px;
+            }
+
+            form{
+                padding:25px;
+            }
+
+            input[type="text"]{
+                width:100%;
+                margin-bottom:15px;
+            }
+
+            input[type="submit"]{
+                width:100%;
+                margin-left:0;
+            }
+
+            .recipe{
+                padding:22px;
+            }
+
+            .recipe h3{
+                font-size:24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Recipe Recommendation System</h1>
+
+    <p class="subtitle">
+        Discover delicious recipes with ingredients already in your kitchen ✨
+    </p>
+
+    <form method="POST" action="/recommend">
+
+        <label for="ingredients">
+            Enter ingredients (comma-separated):
+        </label>
+
+        <br><br>
+
+        <input type="text"
+               name="ingredients"
+               id="ingredients"
+               placeholder="e.g. tomato, onion, garlic"
+               required>
+
+        <input type="submit" value="Get Recipes">
+
+    </form>
+
+    {% if recommendations %}
+        <h2>Top Recipes</h2>
+
+        {% for recipe in recommendations %}
+        <div class="recipe">
+
+            <h3>{{ recipe.TranslatedRecipeName }}</h3>
+
+            <p>
+                <strong>Ingredients:</strong>
+                {{ recipe.TranslatedIngredients }}
+            </p>
+
+            <p>
+                <strong>Instructions:</strong>
+                {{ recipe.TranslatedInstructions }}
+            </p>
+
+            <p>
+                <strong>Total Time:</strong>
+                {{ recipe.TotalTimeInMins }} minutes
+            </p>
+
+            <p>
+                <a href="{{ recipe.URL }}" target="_blank">
+                    🍴 View Full Recipe
+                </a>
+            </p>
+
+        </div>
+        {% endfor %}
+
+    {% elif recommendations is defined %}
+        <p class="no-results">
+            No matching recipes found. Please enter valid ingredients.
+        </p>
+    {% endif %}
+
+</body>
+</html>
