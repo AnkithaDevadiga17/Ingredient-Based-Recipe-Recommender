@@ -533,7 +533,7 @@ different aspects of the application.
 <h3>Ankitha Devadiga</h3>
 
 <p>
-BCA Student
+BCA Graduate | Currently pursuing MCA
 </p>
 
 <p>
